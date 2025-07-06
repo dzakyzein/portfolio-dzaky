@@ -10,6 +10,9 @@ import Footer from "./components/footer";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const App = () => {
   useEffect(() => {
     AOS.init({
@@ -28,6 +31,8 @@ const App = () => {
       <Skills />
       <Contact />
       <Footer />
+
+      <ToastContainer position='top-right' autoClose={3000} theme='light' />
     </div>
   );
 };

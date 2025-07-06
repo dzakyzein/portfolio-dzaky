@@ -2,9 +2,17 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaEnvelope, FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa";
+import emailjs from "emailjs-com";
+import { toast } from "react-toastify";
+import {
+  EMAILJS_SERVICE_ID,
+  EMAILJS_TEMPLATE_ID,
+  EMAILJS_PUBLIC_KEY,
+} from "../constants/email";
 
 const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -12,8 +20,28 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Pesan dikirim! (simulasi)");
-    setForm({ name: "", email: "", message: "" });
+    setLoading(true);
+
+    emailjs
+      .send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          name: form.name,
+          email: form.email,
+          message: form.message,
+        },
+        EMAILJS_PUBLIC_KEY // Ganti dengan Public Key kamu dari EmailJS
+      )
+      .then(
+        () => {
+          toast.success("Message send successfull! 🎉");
+          setForm({ name: "", email: "", message: "" });
+        },
+        (error) => {
+          toast.error("Failed to send message");
+        }
+      );
   };
 
   return (

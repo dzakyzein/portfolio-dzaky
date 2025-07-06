@@ -2,10 +2,11 @@
 import React, { useState } from "react";
 import { HiMenu, HiX } from "react-icons/hi";
 import { motion } from "framer-motion";
+import { Link } from "react-scroll";
 
 const navItems = [
   { name: "Home", href: "#hero" },
-  { name: "About", href: "#about" },
+  { name: "Stats", href: "#github" },
   { name: "Projects", href: "#projects" },
   { name: "Skills", href: "#skills" },
   { name: "Contact", href: "#contact" },
@@ -41,9 +42,15 @@ const Navbar = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 + index * 0.1 }}
             >
-              <a href={item.href} className='hover:text-white'>
+              <Link
+                to={item.href.replace("#", "")}
+                smooth={true}
+                duration={500}
+                offset={-80}
+                className='cursor-pointer hover:text-white'
+              >
                 {item.name}
-              </a>
+              </Link>
             </motion.li>
           ))}
         </ul>
@@ -66,13 +73,16 @@ const Navbar = () => {
         >
           {navItems.map((item) => (
             <li key={item.name}>
-              <a
-                href={item.href}
+              <Link
+                to={item.href.replace("#", "")}
+                smooth={true}
+                duration={500}
+                offset={-80}
                 className='block py-2 border-b border-white/10 hover:text-white'
                 onClick={() => setIsOpen(false)}
               >
                 {item.name}
-              </a>
+              </Link>
             </li>
           ))}
         </motion.ul>
